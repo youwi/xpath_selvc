@@ -111,8 +111,8 @@ xh.findBySpAttr = function (el) {
   let originalElementTagName = el.tagName.toLowerCase();
 
 
-  if (el.innerText.length < 20) {
-    checkPathThenPush(`//${el.tagName.toLowerCase()}[text()="${el.innerText}"]`, out, el);
+  if (el.textContent.length < 20) {
+    checkPathThenPush(`//${el.tagName.toLowerCase()}[text()="${el.textContent}"]`, out, el);
   }
   let attNames = el.getAttributeNames();
   let attNamesParent = el.parentElement.getAttributeNames();
@@ -162,14 +162,14 @@ xh.findBySpAttr = function (el) {
       } else if (needTrim && (item.self !== true)) {
         found = checkPathThenPush(`//${cTagName}[contains(text(),"${cText.trim()}")]/${cLevel}/${originalElementTagName}`, out, el);
         if (isShortLinkText(el)) {
-          found = checkPathThenPush(`//${cTagName}[contains(text(),"${cText.trim()}")]/${cLevel}/${originalElementTagName}[text()="${el.innerText}"]`, out, el);
+          found = checkPathThenPush(`//${cTagName}[contains(text(),"${cText.trim()}")]/${cLevel}/${originalElementTagName}[text()="${el.textContent}"]`, out, el);
         }
       } else if (!needTrim && item.self) {
         found = checkPathThenPush(`//${cTagName}[text()="${cText}"]`, out, el);
       } else if (!needTrim && !item.self) {
         found = checkPathThenPush(`//${cTagName}[text()="${cText}"]/${cLevel}/${originalElementTagName}`, out, el);
         if (isShortLinkText(el)) {
-          found = checkPathThenPush(`//${cTagName}[text()="${cText}"]/${cLevel}/${originalElementTagName}[text()="${el.innerText}"]`, out, el);
+          found = checkPathThenPush(`//${cTagName}[text()="${cText}"]/${cLevel}/${originalElementTagName}[text()="${el.textContent}"]`, out, el);
         }
       }
       if (out.length > xh.RES_LIMIT || xh.itr_count > xh.ITR_LIMIT) {
@@ -178,7 +178,7 @@ xh.findBySpAttr = function (el) {
       if (found) break;
     }
 
-    if (el.innerText.length < xh.TEXT_LIMIT) {
+    if (el.textContent.length < xh.TEXT_LIMIT) {
       checkPathThenPush(`//${tagName}[text()="${getChildNodeTexts(currentElement)}"]`, out, el);
     }
 
@@ -193,7 +193,7 @@ xh.findBySpAttr = function (el) {
 };
 
 function isShortLinkText(el) {
-  return el.innerText.length < xh.TEXT_LIMIT && el.innerText.length > 0 && el.innerText.trim() === el.innerText;
+  return el.textContent.length < xh.TEXT_LIMIT && el.textContent.length > 0 && el.textContent.trim() === el.textContent;
 }
 
 /**
@@ -229,8 +229,8 @@ xh.getElementByTagProp = function (el) {
 
     if (newElement.getAttribute("prop")) {
 
-      if (newElement.innerText && newElement.innerText.length < xh.TEXT_LIMIT) {
-        commentText = newElement.innerText;
+      if (newElement.textContent && newElement.textContent.length < xh.TEXT_LIMIT) {
+        commentText = newElement.textContent;
       }
       out = "//" + newElement.tagName.toLowerCase() + "[@prop='" + newElement.getAttribute("prop") + "'" + " and '" + commentText + "']";
       return out;
