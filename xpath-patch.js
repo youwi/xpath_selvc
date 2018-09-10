@@ -284,4 +284,4 @@ xh.evaluateUniqueClassName = function (query, originalElement) {
 
   return nodeCount;
 };
-
+export default xh;
