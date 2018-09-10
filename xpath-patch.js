@@ -35,6 +35,7 @@ var xh = xh || {};
 xh.test_count = 0;//for performance test
 xh.itr_count = 0;
 xh.found_count = 0; // for performance test
+xh.tmp_obj={}
 
 xh.LEVEL_LIMIT = 7; // fun recursive call limit
 xh.RES_LIMIT = 30;  // max result
@@ -42,13 +43,20 @@ xh.ITR_LIMIT = 1000;// for performance test
 xh.TEXT_LIMIT = 20; // for xpath text() lmint
 
 function checkPathThenPush(path, list, originalElement) {
-  let foundCount = xh.evaluateUniqueClassName(path, originalElement);
-  if (foundCount === 1) {
-    list.push(path);
-    xh.found_count++;
-    return true;
+  if(xh.tmp_obj[path]){
+    return xh.tmp_obj[path];
+  }else{
+    let foundCount = xh.evaluateUniqueClassName(path, originalElement);
+    if (foundCount === 1) {
+      list.push(path);
+      xh.found_count++;
+      xh.tmp_obj[path]=true;
+      return true;
+    }
+    xh.tmp_obj[path]=false;
+    return false;
   }
-  return false;
+  
 }
 
 /**
@@ -105,6 +113,7 @@ function findParentOnlyAttr(el, level) {
  */
 xh.findBySpAttr = function (el) {
   xh.found_count = 0;
+  xh.tmp_obj={}
   if (el === document.body) return [];
   let out = [];
   let normalAttr = ["class", "style"];
