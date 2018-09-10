@@ -113,6 +113,7 @@ function findParentOnlyAttr(el, level) {
  */
 xh.findBySpAttr = function (el) {
   xh.found_count = 0;
+  xh.itr_count = 0;
   xh.tmp_obj={}
   if (el === document.body) return [];
   let out = [];
