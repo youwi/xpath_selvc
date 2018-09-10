@@ -43,7 +43,7 @@ xh.ITR_LIMIT = 1000;// for performance test
 xh.TEXT_LIMIT = 20; // for xpath text() lmint
 
 function checkPathThenPush(path, list, originalElement) {
-  if(xh.tmp_obj[path]){
+  if(xh.tmp_obj[path] !== null){
     return xh.tmp_obj[path];
   }else{
     let foundCount = xh.evaluateUniqueClassName(path, originalElement);
